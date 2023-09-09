@@ -4,35 +4,59 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class GestaoDeVeiculos implements ActionListener {
+public class GestaoDeVeiculos extends JFrame{
 	
-
-	JFrame janela = new JFrame();
-	private int largura = 500, altura = 500;
+	static GestaoDeVeiculos gestaoDeVeiculos;
 	
-	private JButton passeio = new JButton();
-	private JButton carga = new JButton();
+	int largura = 310, altura  = 150;
 	
+	//Botões
+	JButton passeio = new JButton("    Passeio    ");
+	JButton carga = new JButton("    Carga    ");
 	
+	JPanel panel = new JPanel();
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	private GestaoDeVeiculos() {
+		super("Gestão de Veículos");
+		inicializarComponentes();
+		setLocationRelativeTo(null);
 	}
-
-	public void carregaJanela() {
-		
-		janela.setSize(largura, altura);
-		passeio.setText("Passeio");
-		carga.setText("Carga");
-		janela.add(carga);
-		janela.add(passeio);
-		
-		
-		
-		janela.setLayout(new GridBagLayout());
-		janela.setVisible(true);
+	
+	public static GestaoDeVeiculos getGestaoDeVeiculos() {
+		if(gestaoDeVeiculos == null) {
+			gestaoDeVeiculos = new GestaoDeVeiculos();
+		}
+		return gestaoDeVeiculos;
 	}
+	
+	private void inicializarComponentes(){
+		
+		setLayout(new GridBagLayout());
+		setSize(largura, altura);
+		
+		panel.add(passeio);
+		panel.add(carga);
+		
+		getContentPane().add(panel);
+		
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		passeio.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VeiculoPasseioTela.getVeiculoPasseioTela().setVisible(true);;		
+			}		
+		});
+		
+		carga.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VeiculoCargaTela.getVeiculoPasseioTela().setVisible(true);				
+			}
+		});
+	}
+	
 }
